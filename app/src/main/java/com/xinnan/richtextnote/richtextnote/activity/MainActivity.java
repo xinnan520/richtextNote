@@ -108,25 +108,11 @@ public class MainActivity extends BaseActivity
                 startActivity(intent);
             }
         });
+
+        //长按提示是否删除
         mNoteListAdapter.setOnItemLongClickListener(new MyNoteListAdapter.OnRecyclerViewItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, final Note note) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                builder.setTitle("提示");
-//                builder.setMessage("确定删除笔记？");
-//                builder.setCancelable(false);
-//                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        int ret = noteDao.deleteNote(note.getId());
-//                        if (ret > 0){
-//                            showToast("删除成功");
-//                            refreshNoteList();
-//                        }
-//                    }
-//                });
-//                builder.setNegativeButton("取消", null);
-//                builder.create().show();
                 Snackbar.make(view, "确定删除笔记？右滑取消", Snackbar.LENGTH_LONG)
                         .setAction("确定", new View.OnClickListener() {
                             @Override
@@ -239,13 +225,23 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_notelist) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            showToast("笔记列表");
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_groupmanager) {
 
-        } else if (id == R.id.nav_manage) {
+            showToast("分类管理");
+            Intent intent = new Intent(MainActivity.this, LaberManagerActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_picmanager) {
+
+            showToast("图片管理");
+
+        } else if (id == R.id.nav_setting) {
+
+            showToast("软件设置");
 
         } else if (id == R.id.nav_share) {
 

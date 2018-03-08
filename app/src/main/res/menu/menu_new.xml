@@ -5,6 +5,12 @@
     tools:context="com.sendtion.xrichtextdemo.ui.NewActivity">
 
     <item
+        android:id="@+id/action_select_color"
+        android:orderInCategory="100"
+        android:title="颜色"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_insert_image"
         android:orderInCategory="100"
         android:title="图片"

@@ -5,17 +5,22 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +59,7 @@ public class NewActivity extends BaseActivity {
     private RichTextEditor et_new_content;
     private TextView tv_new_time;
     private TextView tv_new_group;
+    private TextView tv_new_color;
 
     private GroupDao groupDao;
     private NoteDao noteDao;
@@ -73,6 +79,7 @@ public class NewActivity extends BaseActivity {
     private Subscription subsLoading;
     private Subscription subsInsert;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    String color = "#ffffff";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +132,35 @@ public class NewActivity extends BaseActivity {
         et_new_content = (RichTextEditor) findViewById(R.id.et_new_content);
         tv_new_time = (TextView) findViewById(R.id.tv_new_time);
         tv_new_group = (TextView) findViewById(R.id.tv_new_group);
+        tv_new_color = findViewById(R.id.tv_new_color);
+
+        tv_new_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View v = new View(NewActivity.this);
+                PopupMenu pop = new PopupMenu(NewActivity.this, v,100);
+                MenuInflater inflater = pop.getMenuInflater();
+                inflater.inflate(R.menu.menu_group, pop.getMenu());
+                Menu Menu = pop.getMenu();//.addMenu(0,999,9,"更多");
+                GroupDao groupDao = new GroupDao(NewActivity.this);
+                List<Group> groupList = groupDao.queryGroupAll();
+                for (int i = 0; i < groupList.size(); i++) {
+                    Menu.add(0,groupList.get(i).getId(),0,groupList.get(i).getName());
+                }
+//                Menu.add(0,1,0,"111");
+//                Menu.add(0,1,0,"222");
+                pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        int id = menuItem.getItemId();
+//                        Toast.makeText(NewActivity.this, id, Toast.LENGTH_SHORT).show();
+                        tv_new_group.setText(menuItem.getTitle());
+                        return true;
+                    }
+                });
+                pop.show();
+            }
+        });
 
         Intent intent = getIntent();
         flag = intent.getIntExtra("flag", 0);//0新建，1编辑
@@ -135,12 +171,12 @@ public class NewActivity extends BaseActivity {
             myTitle = note.getTitle();
             myContent = note.getContent();
             myNoteTime = note.getCreateTime();
-            Group group = groupDao.queryGroupById(note.getGroupId());
-            myGroupName = group.getName();
+            myGroupName = note.getGroupName();
 
             setTitle("编辑笔记");
             tv_new_time.setText(note.getCreateTime());
             tv_new_group.setText(myGroupName);
+            tv_new_color.setBackgroundColor(Color.parseColor(note.getBgColor()));
             et_new_title.setText(note.getTitle());
             et_new_content.post(new Runnable() {
                 @Override
@@ -255,7 +291,10 @@ public class NewActivity extends BaseActivity {
         String noteContent = getEditData();
         String groupName = tv_new_group.getText().toString();
         String noteTime = tv_new_time.getText().toString();
-
+        View v = new View(this);
+                PopupMenu pop = new PopupMenu(this, v,100);
+                MenuInflater inflater = pop.getMenuInflater();
+                inflater.inflate(R.menu.menu_color, pop.getMenu());
         Group group = groupDao.queryGroupByName(myGroupName);
         if (group != null) {
             if (noteTitle.length() == 0 ){//如果标题为空，则截取内容为标题
@@ -271,7 +310,7 @@ public class NewActivity extends BaseActivity {
             note.setGroupId(groupId);
             note.setGroupName(groupName);
             note.setType(2);
-            note.setBgColor("#FFFFFF");
+            note.setBgColor(color);//"#FFF000");
             note.setIsEncrypt(0);
             note.setCreateTime(DateUtils.date2string(new Date()));
             if (flag == 0 ) {//新建笔记
@@ -312,6 +351,49 @@ public class NewActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.action_select_color:
+                View v = new View(this);
+                PopupMenu pop = new PopupMenu(this, v,100);
+                MenuInflater inflater = pop.getMenuInflater();
+                inflater.inflate(R.menu.menu_color, pop.getMenu());
+                pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.color_red:
+                                color = "#FF0000";
+                                tv_new_color.setBackgroundColor(Color.parseColor(color));
+                                break;
+                            case R.id.color_orange:
+                                color = "#FF7F00";
+                                tv_new_color.setBackgroundColor(Color.parseColor(color));
+                                break;
+                            case R.id.color_yellow:
+                                color = "#FFFF00";
+                                tv_new_color.setBackgroundColor(Color.parseColor(color));
+                                break;
+                            case R.id.color_green:
+                                color = "#00FF00";
+                                tv_new_color.setBackgroundColor(Color.parseColor(color));
+                                break;
+                            case R.id.color_cyan:
+                                color = "#00FFFF";
+                                tv_new_color.setBackgroundColor(Color.parseColor(color));
+                                break;
+                            case R.id.color_blue:
+                                color = "#0000FF";
+                                tv_new_color.setBackgroundColor(Color.parseColor(color));
+                                break;
+                            case R.id.color_purple:
+                                color = "#9900FF";
+                                tv_new_color.setBackgroundColor(Color.parseColor(color));
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                pop.show();
+                break;
             case R.id.action_insert_image:
                 checkPermission();
                 callGallery();

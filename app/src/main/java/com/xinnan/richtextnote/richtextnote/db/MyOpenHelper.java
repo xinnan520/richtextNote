@@ -31,6 +31,9 @@ public class MyOpenHelper extends SQLiteOpenHelper {
                 "n_update_time datetime )");
         db.execSQL("insert into db_group(g_name, g_order, g_color, g_encrypt, g_create_time, g_update_time) " +
                 "values(?,?,?,?,?,?)", new String[]{"默认笔记", "1", "#FFFFFF", "0", DateUtils.date2string(new Date()),DateUtils.date2string(new Date())});
+        db.execSQL("insert into db_group(g_name, g_order, g_color, g_encrypt, g_create_time, g_update_time) " +
+                "values(?,?,?,?,?,?)", new String[]{"日记", "1", "#FFFFFF", "0", DateUtils.date2string(new Date()),DateUtils.date2string(new Date())});
+
     }
 
     @Override

@@ -5,21 +5,21 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_notelist"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="笔记列表" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_groupmanager"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="分类管理" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_picmanager"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="图片管理" />
+        <item
+            android:id="@+id/nav_setting"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="软件设置" />
     </group>
 
     <item android:title="Communicate">

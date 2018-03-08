@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/color_red"
+        android:title="红"/>
+    <item android:id="@+id/color_orange"
+        android:title="橙"/>
+    <item android:id="@+id/color_yellow"
+        android:title="黄"/>
+    <item android:id="@+id/color_green"
+        android:title="绿"/>
+    <item android:id="@+id/color_cyan"
+        android:title="青"/>
+    <item android:id="@+id/color_blue"
+        android:title="蓝"/>
+    <item android:id="@+id/color_purple"
+        android:title="紫"/>
+</menu>

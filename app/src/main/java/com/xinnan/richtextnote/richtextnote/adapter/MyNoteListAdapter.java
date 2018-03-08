@@ -1,6 +1,7 @@
 package com.xinnan.richtextnote.richtextnote.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -82,10 +83,12 @@ public class MyNoteListAdapter extends RecyclerView.Adapter<MyNoteListAdapter.Vi
         //将数据保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(note);
         //Log.e("adapter", "###record="+record);
+
         holder.tv_list_title.setText(note.getTitle());
         holder.tv_list_summary.setText(note.getContent());
         holder.tv_list_time.setText(note.getCreateTime());
         holder.tv_list_group.setText(note.getGroupName());
+        holder.tv_list_color.setBackgroundColor(Color.parseColor(note.getBgColor()));
     }
 
     @Override
@@ -102,6 +105,7 @@ public class MyNoteListAdapter extends RecyclerView.Adapter<MyNoteListAdapter.Vi
         public TextView tv_list_title;//笔记标题
         public TextView tv_list_summary;//笔记摘要
         public TextView tv_list_time;//创建时间
+        public TextView tv_list_color;//笔记颜色
         public TextView tv_list_group;//笔记分类
         public CardView card_view_note;
 
@@ -111,6 +115,7 @@ public class MyNoteListAdapter extends RecyclerView.Adapter<MyNoteListAdapter.Vi
             tv_list_title = (TextView) view.findViewById(R.id.tv_list_title);
             tv_list_summary = (TextView) view.findViewById(R.id.tv_list_summary);
             tv_list_time = (TextView) view.findViewById(R.id.tv_list_time);
+            tv_list_color = view.findViewById(R.id.tv_list_color);
             tv_list_group = (TextView) view.findViewById(R.id.tv_list_group);
         }
     }

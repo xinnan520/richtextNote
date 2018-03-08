@@ -2,6 +2,7 @@ package com.xinnan.richtextnote.richtextnote.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -39,6 +40,7 @@ public class NoteActivity extends BaseActivity {
     private TextView tv_note_title;//笔记标题
     private RichTextView tv_note_content;//笔记内容
     private TextView tv_note_time;//笔记创建时间
+    private TextView tv_note_color;//选择笔记颜色
     private TextView tv_note_group;//选择笔记分类
     //private ScrollView scroll_view;
     private Note note;//笔记对象
@@ -93,6 +95,7 @@ public class NoteActivity extends BaseActivity {
         tv_note_content = (RichTextView) findViewById(R.id.tv_note_content);//内容
         tv_note_time = (TextView) findViewById(R.id.tv_note_time);
         tv_note_group = (TextView) findViewById(R.id.tv_note_group);
+        tv_note_color = (TextView) findViewById(R.id.tv_note_color);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("data");
@@ -100,8 +103,7 @@ public class NoteActivity extends BaseActivity {
 
         myTitle = note.getTitle();
         myContent = note.getContent();
-        Group group = groupDao.queryGroupById(note.getGroupId());
-        myGroupName = group.getName();
+        myGroupName = note.getGroupName();
 
         tv_note_title.setText(myTitle);
         tv_note_content.post(new Runnable() {
@@ -113,6 +115,7 @@ public class NoteActivity extends BaseActivity {
             }
         });
         tv_note_time.setText(note.getCreateTime());
+        tv_note_color.setBackgroundColor(Color.parseColor(note.getBgColor()));
         tv_note_group.setText(myGroupName);
         setTitle("笔记详情");
 
