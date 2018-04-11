@@ -229,4 +229,24 @@ public class GroupDao {
         }
         return ret;
     }
+    /**
+     * 删除一个分类
+     */
+    public int deleteGroup(String groupName) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        int ret = 0;
+        try {
+            ret = db.delete("db_group", "g_name=?", new String[]{groupName + ""});
+            //Group group = queryGroupByName("默认笔记");
+            //noteDataDao.updateNote2(groupId, group.getGroupId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return ret;
+    }
 }
